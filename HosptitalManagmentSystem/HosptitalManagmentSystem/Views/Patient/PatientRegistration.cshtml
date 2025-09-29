@@ -1,0 +1,49 @@
+﻿@model List<HosptitalManagmentSystem.DTOs.PatientDTO>
+
+<div class="container mt-4">
+    <!-- Search Bar -->
+    <form asp-action="PatientRegistration" method="get" class="row mb-4" id="searchForm">
+        <div class="col-md-7">
+            <input type="text" name="searchTerm" class="form-control"
+                   placeholder="Search by name or phone"
+                   value="@Context.Request.Query["searchTerm"]"
+                   oninput="document.getElementById('searchForm').submit();" />
+        </div>
+        <div class="col-md-3">
+            <button type="submit" class="btn btn-primary w-100">Search</button>
+        </div>
+        <div class="col-md-2">
+            <a asp-action="AddPatient" class="btn btn-success w-100">Add Patient</a>
+        </div>
+    </form>
+
+    @if (ViewBag.NotFound == true)
+    {
+        <div class="alert alert-warning">
+            No patient found with this number.
+            <a asp-action="PatientRegistration" class="btn btn-sm btn-success ms-2">Add Patient</a>
+        </div>
+    }
+
+    <!-- Patient Cards -->
+    <div class="row">
+        @foreach (var patient in Model)
+        {
+            var isHighlighted = (ViewBag.HighlightedId != null && ViewBag.HighlightedId == patient.Id);
+            <div class="col-md-4 mb-3">
+                <div class="card @(isHighlighted ? "border-success shadow-lg" : "shadow")">
+                    <div class="card-body">
+                        <h5 class="card-title">@patient.Name</h5>
+                        <p class="card-text">
+                            <strong>Phone:</strong> @patient.Phone <br />
+                            <strong>Email:</strong> @patient.Email <br />
+                            <strong>Address:</strong> @patient.Address
+                        </p>
+                        <a asp-action="PatientDetails" asp-route-id="@patient.Id" class="btn btn-outline-primary">View Details</a>
+                        <a asp-action="MakeAppoiment" asp-controller="Appoiment" asp-route-id="@patient.Id" class="btn btn-outline-primary">Appoiment</a>
+                    </div>
+                </div>
+            </div>
+        }
+    </div>
+</div>

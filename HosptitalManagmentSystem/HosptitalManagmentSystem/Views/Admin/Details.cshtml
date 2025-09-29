@@ -1,0 +1,21 @@
+﻿@model HosptitalManagmentSystem.Models.Department
+
+<div class="container-fluid text-center">
+    <h1 class="display-4">@Model.Name</h1>
+</div>
+
+<div class="row align-items-center mt-4">
+    <!-- Left side: Image -->
+    <div class="col-md-5 text-center">
+        <img src="@Url.Content("~/" + Model.DepartmentImagePath)"
+             alt="@Model.Name"
+             class="img-fluid rounded-circle"
+             style="width:400px; height:400px; object-fit:cover;" />
+    </div>
+
+    <!-- Right side: Description -->
+    <div class="col-md-7 d-flex align-items-center justify-content-center">
+        <p class="lead">@Model.Description</p>
+    </div>
+</div>
+

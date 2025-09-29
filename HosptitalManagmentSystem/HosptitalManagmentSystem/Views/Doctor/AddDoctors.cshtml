@@ -1,0 +1,127 @@
+﻿@model HosptitalManagmentSystem.DTOs.DoctorDTO
+
+<h4>Doctor</h4>
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="AddDoctors" enctype="multipart/form-data">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+           
+            <div class="form-group">
+                <label asp-for="DoctorName" class="control-label"></label>
+                <input asp-for="DoctorName" class="form-control" />
+                <span asp-validation-for="DoctorName" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Specialty" class="control-label"></label>
+                <input asp-for="Specialty" class="form-control" />
+                <span asp-validation-for="Specialty" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Phone" class="control-label"></label>
+                <input asp-for="Phone" class="form-control" />
+                <span asp-validation-for="Phone" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Qualification" class="control-label"></label>
+                <input asp-for="Qualification" class="form-control" />
+                <span asp-validation-for="Qualification" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Email" class="control-label"></label>
+                <input asp-for="Email" class="form-control" />
+                <span asp-validation-for="Email" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DepartmentID" class="control-label"></label>
+             
+                <select asp-for="DepartmentID" class="form-control" asp-items="ViewBag.Departments">
+                    <option value="">-- Select Department --</option>
+                </select>
+                <span asp-validation-for="DepartmentID" class="text-danger"></span>
+            
+            </div>
+            <div class="form-group">
+                <label class="control-label">From Time</label>
+                <div class="d-flex">
+                    <!-- Hour Dropdown -->
+                    <select class="form-control" name="FromTimeHour" style="width:70px;">
+                        @for (int h = 1; h <= 12; h++)
+                        {
+                            <option value="@h">@h.ToString("D2")</option>
+                        }
+                    </select>
+
+                    <span class="mx-1">:</span>
+
+                    <!-- Minute Dropdown -->
+                    <select class="form-control" name="FromTimeMinute" style="width:70px;">
+                        @for (int m = 0; m < 60; m++)
+                        {
+                            <option value="@m">@m.ToString("D2")</option>
+                        }
+                    </select>
+
+                    <!-- AM/PM Dropdown -->
+                    <select class="form-control" name="FromTimeAMPM" style="width:80px;">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label  class="control-label">To Time</label>
+                <div class="d-flex">
+                    <select class="form-control" name="ToTimeHour" style="width:70px;">
+                        @for (int h = 1; h <= 12; h++)
+                        {
+                            <option value="@h">@h.ToString("D2")</option>
+                        }
+                    </select>
+
+                    <span class="mx-1">:</span>
+
+                    <select class="form-control" name="ToTimeMinute" style="width:70px;">
+                        @for (int m = 0; m < 60; m++)
+                        {
+                            <option value="@m">@m.ToString("D2")</option>
+                        }
+                    </select>
+
+                    <select class="form-control" name="ToTimeAMPM" style="width:80px;">
+                        <option value="AM">AM</option>
+                        <option value="PM">PM</option>
+                    </select>
+                </div>
+            </div>
+
+
+            <div class="form-group">
+                <label asp-for="TokenLimit" class="control-label"></label>
+                <select asp-for="TokenLimit" class="form-control">
+                    @for (int i = 1; i <= 100; i++)
+                    {
+                        <option value="@i">@i</option>
+                    }
+                </select>
+                <span asp-validation-for="TokenLimit" class="text-danger"></span>
+            </div>
+
+            <div class="form-group">
+                <label asp-for="DoctorImage" class="control-label"></label>
+                <input asp-for="DoctorImage
+" type="file" name="DoctorImage" class="form-control" />
+                <span asp-validation-for="DoctorImage" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Create" class="btn btn-primary" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index">Back to List</a>
+</div>
+

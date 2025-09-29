@@ -1,0 +1,15 @@
+﻿@model string
+
+<div class="card mb-4 shadow-sm">
+    <div class="card-header bg-info text-white">
+        <h5><i class="bi bi-search"></i> Search Patient</h5>
+    </div>
+    <div class="card-body">
+        <form asp-action="SearchPatient" method="get" class="d-flex">
+            <input type="text" name="searchTerm" class="form-control me-2" placeholder="Enter name or phone..." value="searchTerm" />
+            <button type="submit" class="btn btn-outline-primary">
+                <i class="bi bi-search"></i> Search
+            </button>
+        </form>
+    </div>
+</div>

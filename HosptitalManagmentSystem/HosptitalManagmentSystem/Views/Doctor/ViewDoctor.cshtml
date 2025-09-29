@@ -1,0 +1,30 @@
+﻿@model HosptitalManagmentSystem.Models.Doctor
+
+<div class="container mt-5">
+    <!-- Header: Name & Department -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold">@Model.DoctorName</h1>
+        <h3 class="text-muted">@Model.Department.Name</h3>
+    </div>
+
+    <!-- Main Content Row -->
+    <div class="row align-items-center">
+        <!-- Left: Image -->
+        <div class="col-md-5 d-flex justify-content-center justify-content-md-start mb-4 mb-md-0">
+            <img src="@Url.Content("~/" + Model.DepartmentImagePath)"
+                 alt="@Model."
+                 class="img-fluid rounded-circle shadow"
+                 style="width:350px; height:350px; object-fit:cover;" />
+        </div>
+
+        <!-- Right: Details -->
+        <div class="col-md-7">
+            <div class="d-flex flex-column justify-content-center h-100">
+                <p class="lead mb-2"><strong>Qualification:</strong> @Model.Qualification</p>
+                <p class="lead mb-2"><strong>Email:</strong> @Model.Email</p>
+                <p class="lead mb-2"><strong>Phone:</strong> @Model.Phone</p>
+                <p class="lead mb-2"><strong>Doctor Timing:</strong>@Model.DoctorTiming</p>
+            </div>
+        </div>
+    </div>
+</div>

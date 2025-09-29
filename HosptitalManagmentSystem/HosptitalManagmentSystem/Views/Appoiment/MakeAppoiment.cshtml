@@ -1,0 +1,113 @@
+﻿@model HosptitalManagmentSystem.DTOs.AppoimentDto
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#DepartmentId').change(function () {
+                var deptId = $(this).val();
+                $('#DoctorId').empty(); // Clear previous options
+                $('#DoctorId').append('<option value="">-- Select Doctor --</option>');
+
+                if (deptId) {
+                    $.ajax({
+                        url: '@Url.Action("GetDoctorsByDepartment", "Appoiment")',
+                        type: 'GET',
+                        data: { departmentId: deptId },
+                        success: function (data) {
+                            // data should be a JSON array of { Id, DoctorName }
+                            $.each(data, function (i, doctor) {
+                                $('#DoctorId').append('<option value="' + doctor.id + '">' + doctor.doctorName  + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert('Error retrieving doctors.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+
+<div>
+    <h4>Appointment Booking</h4>
+    <hr />
+
+    <form asp-action="MakeAppoiment" method="post">
+        <dl class="row">
+            <!-- Hidden PatientId -->
+            <input type="hidden" asp-for="PatientId" />
+
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.CustomId)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.CustomId)
+                <!-- Hidden so it's posted back -->
+                <input type="hidden" asp-for="CustomId" />
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Date)
+            </dt>
+            <dd class="col-sm-10">
+                <input asp-for="Date" class="form-control" type="date" min="@DateTime.Now.ToString("yyyy-MM-dd")" />
+                @Html.ValidationMessageFor(model => model.Date, "", new { @class = "text-danger" })
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Name)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Name)
+                <input type="hidden" asp-for="Name" />
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Phone)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Phone)
+                <input type="hidden" asp-for="Phone" />
+            </dd>
+
+            <dt class="col-sm-2">
+                @Html.DisplayNameFor(model => model.Location)
+            </dt>
+            <dd class="col-sm-10">
+                @Html.DisplayFor(model => model.Location)
+				<input type="hidden" asp-for="Location" />
+            </dd>
+           
+            <dt class="col-sm-2">
+                Department
+            </dt>
+            <dd class="col-sm-10">
+                <select id="DepartmentId" class="form-control">
+                    <option value="">-- Select Department --</option>
+                    @foreach (var dept in ViewBag.Departments)
+                    {
+                        <option value="@dept.DepartmentId">@dept.Name</option>
+                    }
+                </select>
+            </dd>
+            <dt class="col-sm-2">
+                Doctor
+            </dt>
+
+            <div class="form-group">
+              
+
+                <select id="DoctorId" asp-for="SelectedDoctorId" class="form-control">
+                    <option value="">-- Select Doctor --</option>
+                </select>
+                <span asp-validation-for="SelectedDoctorId" class="text-danger"></span>
+
+            </div>
+        </dl>
+
+        <button type="submit" class="btn btn-success">Book Appointment</button>
+        <a asp-action="Index" class="btn btn-secondary">Back to List</a>
+    </form>
+</div>

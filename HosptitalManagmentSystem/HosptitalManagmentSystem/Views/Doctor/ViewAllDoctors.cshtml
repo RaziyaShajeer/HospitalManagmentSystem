@@ -1,0 +1,36 @@
+﻿@model List<HosptitalManagmentSystem.DTOs.DoctorGroupDto>
+
+<div class="container mt-4">
+    @foreach (var group in Model)
+    {
+        <div class="card mb-4 shadow">
+            <div class="card-header bg-primary text-white text-center">
+                <h4>@group.DepartmentName</h4>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    @foreach (var doctor in group.Doctors)
+                    {
+                        <div class="col-md-4 mb-3">
+                            <div class="card h-100 text-center">
+                                <img src="@Url.Content("~/" + doctor.DepartmentImagePath)"
+                                     alt="@doctor.DoctorName"
+                                     class="card-img-top rounded-circle mx-auto mt-3"
+                                     style="width:150px; height:150px; object-fit:cover;" />
+                                <div class="card-body">
+                                    <h5 class="card-title">@doctor.DoctorName</h5>
+                                    <p class="card-text">
+                                        <strong>Specialty:</strong> @doctor.Specialty <br />
+                                        <strong>Qualification:</strong> @doctor.Qualification <br />
+                                        <strong>Email:</strong> @doctor.Email <br />
+                                        <strong>Phone:</strong> @doctor.Phone
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+        </div>
+    }
+</div>

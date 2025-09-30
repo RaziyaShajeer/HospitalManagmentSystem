@@ -4,6 +4,7 @@ using HosptitalManagmentSystem.Interface;
 using HosptitalManagmentSystem.Models;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Microsoft.EntityFrameworkCore;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace HosptitalManagmentSystem.Controllers
@@ -23,10 +24,7 @@ namespace HosptitalManagmentSystem.Controllers
 			_departmentService = departmentService;
 			_appoimentService = appoimentService;
 		}
-		public IActionResult Index()
-		{
-			return View();
-		}
+		
 		public async Task<IActionResult> MakeAppoiment(int Id)
 		{
 
@@ -43,6 +41,7 @@ namespace HosptitalManagmentSystem.Controllers
 			appoiment.Location = patienttoapoiment.Location;
 			appoiment.Phone = patienttoapoiment.Phone;
 			ViewBag.departments = _departmentService.GetAllDepartment();
+			
 			return View(appoiment);
 		}
 		[HttpPost]
@@ -69,8 +68,8 @@ namespace HosptitalManagmentSystem.Controllers
 			};
 			_appoimentService.MakeAppoiment(appointment);
 
-			
-			return RedirectToAction("GetDoctorViewAppoiment",appointment);
+			var apponmentview = _mapper.Map<AppoinmentViewDTo>(appointment);
+			return View("GetDoctorViewAppoiment", apponmentview);
 		}
 		[HttpGet]
 		public async Task<IActionResult> GetDoctorsByDepartment(Guid departmentId)
@@ -93,9 +92,47 @@ namespace HosptitalManagmentSystem.Controllers
 			var apoinmentListDto = _mapper.Map<List<AppoinmentListViewDTO>>(apoinmentList);
 			return View(apoinmentListDto);
 		}
+		public async Task<IActionResult> Index(DateTime? searchDate, string phone, string opNumber)
+		{
+			var query = await _appoimentService.GetAppoinmentList(); // List<Appointment>
+
+			if (searchDate.HasValue)
+			{
+				query = query
+					.Where(a => a.AppointmentDate.Date == searchDate.Value.Date)
+					.ToList(); // reassign filtered list
+			}
+
+			if (!string.IsNullOrEmpty(phone))
+			{
+				query = query.Where(a => a.Patient.Phone.Contains(phone)).ToList();
+			}
+
+			if (!string.IsNullOrEmpty(opNumber))
+			{
+				query = query.Where(a => a.Patient.CustomId.Contains(opNumber)).ToList();
+			}
+
+			var result =  query.ToList(); // async EF call
+			var apoinmentListDto = _mapper.Map<List<AppoinmentListViewDTO>>(result);
+			return View(apoinmentListDto);
+		}
 		public async Task<IActionResult> Appointed(Guid id)
 		{
-			var appoinment=_appoimentService.GetAppoinmentById(id);
+			await _appoimentService.ChangeStatusToAppointed(id);
+
+			var apoinmentList = await _appoimentService.GetAppoinmentList();
+			return RedirectToAction("getAllAppoinments", apoinmentList);
+
+
+
+		}
+		public async Task<IActionResult> Consultedpatients()
+		{
+			
+
+			var apoinmentList = await _appoimentService.GetAppoinmentList();
+			return RedirectToAction("getAllAppoinments", apoinmentList);
 
 
 

@@ -7,6 +7,8 @@ namespace HosptitalManagmentSystem.Interface
 	{
 		public Task MakeAppoiment(Appointment appoimentDto);
 		public Task<Appointment> GetAppoinmentById(Guid Id);
+		public Task ChangeStatusToAppointed(Guid id);
 		public Task<List<Appointment>> GetAppoinmentList();
+		//public Task<List<Appointment>> ConsultedPatients();
 	}
 }

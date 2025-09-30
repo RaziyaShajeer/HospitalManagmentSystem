@@ -38,7 +38,7 @@ namespace HosptitalManagmentSystem.Controllers
 			
 
 
-			return View();
+			return RedirectToAction("PatientRegistration");
 		}
 
 		[HttpGet]

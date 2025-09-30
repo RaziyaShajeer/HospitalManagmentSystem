@@ -22,6 +22,7 @@ namespace HosptitalManagmentSystem.Helpers
 				=>dest.Location,opt=>opt.MapFrom(src=>
 				src.Patient.Location)).ForMember(dest=>dest.phone,opt=>opt.MapFrom(src=>src.Patient.Phone));
 			CreateMap<Appointment, AppoinmentListViewDTO>().ForMember(dest => dest.departmentName, opt => opt.MapFrom(src => src.Doctor.Department.Name)).ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor.DoctorName)).ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Patient.Name)).ForMember(dest=>dest.Phone,opt=>opt.MapFrom(src=>src.Patient.Phone));
+			CreateMap<Appointment, AppoinmentViewDTo>().ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Doctor.Department.Name)).ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor.DoctorName)).ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Patient.Name)).ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Patient.Phone));
 		}
 	}
 }

@@ -1,61 +1,68 @@
 ﻿@model IEnumerable<HosptitalManagmentSystem.DTOs.AppoinmentListViewDTO>
 
-<p>
-    <a asp-action="Create">Create New</a>
-</p>
-<table class="table">
-    <thead>
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.Name)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.DoctorName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.AppointmentDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.departmentName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.Phone)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.TokenNumber)
-            </th>
-            <th></th>
-        </tr>
-    </thead>
-    <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.Name)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.DoctorName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.AppointmentDate)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.departmentName)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.Phone)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TokenNumber)
-            </td>
-            <td>
-                    @Html.ActionLink("Appointed", "Appointed", new { id = item.AppointmentId }, new { @class = "btn btn-success btn-sm" })
-                    @Html.Raw(" ") <!-- space between buttons -->
-                    @Html.ActionLink("Cancel", "Cancel", new { id = item.AppointmentId }, new { @class = "btn btn-danger btn-sm" })
+<div class="container my-4">
+    <!-- Search Partial -->
+    <div class="mb-4">
+        @await Html.PartialAsync("_ApoinmentSearch")
+    </div>
 
-               
-            </td>
-        </tr>
-}
-    </tbody>
-</table>
+    <!-- Appointment Table -->
+    <div class="card shadow border-0 rounded-4">
+        <div class="card-header bg-gradient bg-primary text-white fw-semibold d-flex align-items-center">
+            <i class="bi bi-calendar-check me-2"></i> Appointment List
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover table-striped align-middle mb-0">
+                    <thead class="table-primary text-dark">
+                        <tr>
+                            <th>@Html.DisplayNameFor(model => model.Name)</th>
+                            <th>@Html.DisplayNameFor(model => model.DoctorName)</th>
+                            <th>@Html.DisplayNameFor(model => model.AppointmentDate)</th>
+                            <th>@Html.DisplayNameFor(model => model.departmentName)</th>
+                            <th>@Html.DisplayNameFor(model => model.Phone)</th>
+                            <th>@Html.DisplayNameFor(model => model.TokenNumber)</th>
+                            <th class="text-center">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="fw-medium">@item.Name</td>
+                                <td>@item.DoctorName</td>
+                                <td>@item.AppointmentDate.ToString("dd MMM yyyy, hh:mm tt")</td>
+                                <td>@item.departmentName</td>
+                                <td>@item.Phone</td>
+                                <td>
+                                    <span class="badge bg-info-subtle text-dark border border-info px-3 py-2 rounded-pill">
+                                        @item.TokenNumber
+                                    </span>
+                                </td>
+                                <td class="text-center">
+                                    <a asp-action="Appointed" asp-route-id="@item.AppointmentId"
+                                       class="btn btn-success btn-sm rounded-pill me-2">
+                                        <i class="bi bi-check-circle me-1"></i> Appoint
+                                    </a>
+                                    <a asp-action="Cancel" asp-route-id="@item.AppointmentId"
+                                       class="btn btn-danger btn-sm rounded-pill">
+                                        <i class="bi bi-x-circle me-1"></i> Cancel
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+    .table thead th {
+        white-space: nowrap;
+    }
+    .table td, .table th {
+        vertical-align: middle;
+    }
+</style>

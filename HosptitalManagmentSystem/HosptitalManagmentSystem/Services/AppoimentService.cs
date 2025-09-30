@@ -25,5 +25,9 @@ namespace HosptitalManagmentSystem.Services
 		{
 			return await _appoimentRepository.GetAppoinmentList();
 		}
+		public async Task ChangeStatusToAppointed(Guid id)
+		{
+			 await _appoimentRepository.ChangeStatusToAppointed(id);
+		}
 	}
 }

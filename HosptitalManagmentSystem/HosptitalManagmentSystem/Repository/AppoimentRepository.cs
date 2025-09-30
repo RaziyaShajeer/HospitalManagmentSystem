@@ -29,13 +29,15 @@ namespace HosptitalManagmentSystem.Repository
 		public async Task<List<Appointment>> GetAppoinmentList()
 		{
 
-		return await _context.Appointments.Include(e => e.Doctor).ThenInclude(e => e.Department).Include(e => e.Patient).ToListAsync();
+		return await _context.Appointments.Where(e=>e.status==AppoinmentStatus.Pending).Include(e => e.Doctor).ThenInclude(e => e.Department).Include(e => e.Patient).ToListAsync();
 		}
 		public async  Task ChangeStatusToAppointed(Guid id)
 		{
 			var appoimentToChangeStatus = await _context.Appointments.Where(e => e.AppointmentId == id).FirstOrDefaultAsync();
 			if (appoimentToChangeStatus != null) {
 				appoimentToChangeStatus.status = AppoinmentStatus.Consulted;
+				
+				await _context.SaveChangesAsync();
 			}
 		}
 	}

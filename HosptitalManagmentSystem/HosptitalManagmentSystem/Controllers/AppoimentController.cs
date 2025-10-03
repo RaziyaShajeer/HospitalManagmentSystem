@@ -127,6 +127,26 @@ namespace HosptitalManagmentSystem.Controllers
 
 
 		}
+		[HttpPost]
+		public async Task<IActionResult> DeleteAppoinment(Guid id)
+		{
+			
+				bool appoinmet=	await _appoimentService.DeleteAppoinment(id);
+			if (appoinmet)
+			{
+				TempData["Message"] = "Appointment successfully cancelled!";
+			}
+			else
+			{
+				TempData["Message"] = "Error cancelling appointment!";
+			}
+
+
+
+
+			return RedirectToAction("getAllAppoinments");
+
+			}
 		public async Task<IActionResult> Consultedpatients()
 		{
 			

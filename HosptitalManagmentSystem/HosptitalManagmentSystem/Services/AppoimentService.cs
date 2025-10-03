@@ -29,5 +29,9 @@ namespace HosptitalManagmentSystem.Services
 		{
 			 await _appoimentRepository.ChangeStatusToAppointed(id);
 		}
+		public async Task<bool> DeleteAppoinment(Guid id)
+		{
+		 return await _appoimentRepository.DeleteAppoinment(id);	
+		}
 	}
 }

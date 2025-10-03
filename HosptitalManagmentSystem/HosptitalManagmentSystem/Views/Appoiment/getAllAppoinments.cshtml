@@ -48,6 +48,12 @@
                                        class="btn btn-danger btn-sm rounded-pill">
                                         <i class="bi bi-x-circle me-1"></i> Cancel
                                     </a>
+                                    <form asp-controller="Appoiment" asp-action="DeleteAppoinment" asp-route-id="@item.AppointmentId" method="post" class="d-inline">
+                                        @Html.AntiForgeryToken()
+                                        <button type="submit" class="btn btn-danger btn-sm rounded-pill">
+                                            <i class="bi bi-x-circle me-1"></i> Cancel
+                                        </button>
+                                    </form>
                                 </td>
                             </tr>
                         }
@@ -57,7 +63,31 @@
         </div>
     </div>
 </div>
+<!-- Trigger Button -->
+<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#centerPopup">
+    Show Popup
+</button>
 
+<!-- Modal -->
+<div class="modal fade" id="centerPopup" tabindex="-1" aria-labelledby="popupLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content text-center rounded-3 shadow-lg">
+            <div class="modal-header">
+                <h5 class="modal-title w-100" id="popupLabel">@TempData["Message"]</h5>
+            </div>
+            <div class="modal-body">
+                Appointment cancelled successfully!
+            </div>
+            <div class="modal-footer justify-content-center">
+                <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">OK</button>
+            </div>
+        </div>
+    </div>
+</div>
+.modal-content {
+    border-radius: 1rem;
+    font-size: 1.1rem;
+}
 <style>
     .table thead th {
         white-space: nowrap;

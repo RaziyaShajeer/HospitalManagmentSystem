@@ -1,5 +1,6 @@
 ﻿using HosptitalManagmentSystem.DTOs;
 using HosptitalManagmentSystem.Models;
+using Microsoft.AspNetCore.Mvc.ActionConstraints;
 
 namespace HosptitalManagmentSystem.Interface
 {
@@ -10,5 +11,6 @@ namespace HosptitalManagmentSystem.Interface
 		public Task ChangeStatusToAppointed(Guid id);
 		public Task<List<Appointment>> GetAppoinmentList();
 		//public Task<List<Appointment>> ConsultedPatients();
+		public Task<bool> DeleteAppoinment(Guid id);
 	}
 }

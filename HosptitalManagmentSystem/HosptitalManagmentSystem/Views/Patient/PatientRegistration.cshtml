@@ -40,6 +40,7 @@
                             <strong>Address:</strong> @patient.Address
                         </p>
                         <a asp-action="PatientDetails" asp-route-id="@patient.Id" class="btn btn-outline-primary">View Details</a>
+                        <a asp-action="EditPatient" asp-route-id="@patient.Id" class="btn btn-outline-primary">Edit</a>
                         <a asp-action="MakeAppoiment" asp-controller="Appoiment" asp-route-id="@patient.Id" class="btn btn-outline-primary">Appoiment</a>
                     </div>
                 </div>

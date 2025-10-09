@@ -12,5 +12,7 @@ namespace HosptitalManagmentSystem.Interface
 		public Task<List<Appointment>> GetAppoinmentList();
 		//public Task<List<Appointment>> ConsultedPatients();
 		public Task<bool> DeleteAppoinment(Guid id);
+		public Task EditAppoinment(Appointment appointment);
+		public Task<List<Appointment>> GetAppoinmentsofDoctor(Guid id);
 	}
 }

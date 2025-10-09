@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace HosptitalManagmentSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class io : Migration
+    public partial class initial : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -79,7 +79,8 @@ namespace HosptitalManagmentSystem.Migrations
                     AppointmentDate = table.Column<DateTime>(type: "datetime2", nullable: false),
                     TokenNumber = table.Column<int>(type: "int", nullable: false),
                     PatientID = table.Column<int>(type: "int", nullable: false),
-                    DoctorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false)
+                    DoctorId = table.Column<Guid>(type: "uniqueidentifier", nullable: false),
+                    status = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {

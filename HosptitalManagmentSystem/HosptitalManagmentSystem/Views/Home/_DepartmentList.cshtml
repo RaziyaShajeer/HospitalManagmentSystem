@@ -1,6 +1,14 @@
 ﻿@model IEnumerable<HosptitalManagmentSystem.Models.Department>
 
-
+<style>
+    .card-text {
+        display: -webkit-box;
+        -webkit-line-clamp: 5; /* Show max 5 lines */
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+</style>
 @{
     // Break into chunks of 4
     var deptGroups = Model.Select((dept, index) => new { dept, index })

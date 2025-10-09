@@ -2,23 +2,38 @@
 using HosptitalManagmentSystem.DTOs;
 using HosptitalManagmentSystem.Interface;
 using HosptitalManagmentSystem.Models;
+using HosptitalManagmentSystem.Services;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace HosptitalManagmentSystem.Controllers
 {
 	public class DoctorController : Controller
 	{
+		public override void OnActionExecuting(ActionExecutingContext context)
+		{
+			Response.Headers["Cache-Control"] = "no-cache, no-store, must-revalidate";
+			Response.Headers["Pragma"] = "no-cache";
+			Response.Headers["Expires"] = "0";
+			base.OnActionExecuting(context);
+		}
+
 		private readonly IDepartmentService _departmentService;
 		IMapper _mapper;
 		IDoctorService _doctorService;
+		private readonly EmailService _emailService;
+		IAppoimentService _appoinmentService;
 		private readonly IWebHostEnvironment _env;
-		public DoctorController(IWebHostEnvironment env, IDepartmentService departmentService, IMapper mapper, IDoctorService doctorService)
+		public DoctorController(IWebHostEnvironment env, IDepartmentService departmentService, IMapper mapper, IDoctorService doctorService,IAppoimentService appoimentService,EmailService emailService)
 		{
+			_appoinmentService = appoimentService;
 			_departmentService = departmentService;
 			_mapper = mapper;
 			_doctorService = doctorService;
 			_env = env;
+			_emailService = emailService;
 
 		}
 
@@ -88,7 +103,8 @@ namespace HosptitalManagmentSystem.Controllers
 				var doctor = _mapper.Map<Doctor>(doctordto);
 			doctor.DoctorTiming = DoctorTiming;
 				doctor.DepartmentImagePath = $"uploads/{fileName}";
-				await _doctorService.AddDoctor(doctor);
+				var addedDoctor=await _doctorService.AddDoctor(doctor);
+			await _emailService.SendEmailAsync(doctor.DoctorName,doctor.Email,doctor.Password);
 			
 			return RedirectToAction("ViewDoctor", new { id = doctor.Id });
 		}
@@ -106,6 +122,47 @@ namespace HosptitalManagmentSystem.Controllers
 
 
 		}
+		[HttpGet]
+		public async Task<IActionResult> getAppinmentsofDoctor(DateTime? date)
+		{
+			var userId=HttpContext.Session.GetString("UserId");
+			if (userId == null)
+			{
+				ViewBag.message = "Please Login";
+				return RedirectToAction("Login", "Login");                                                               
+			}
+			Guid id = Guid.Parse(userId);
+			var doctor=await _doctorService.GetDoctorById(id);
+			ViewBag.DoctorName = doctor.DoctorName;
+			var appoinments = await _appoinmentService.GetAppoinmentsofDoctor(id);
+			if (date.HasValue)
+			{
 
+
+				appoinments = appoinments.Where(a => a.AppointmentDate.Date == date.Value.Date).ToList();
+			}
+				var appoinmentDto = _mapper.Map<List<AppoinmentListViewDTO>>(appoinments);
+			if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
+			{
+				return PartialView("_AllAppoinmentspartial", appoinmentDto);
+			}
+
+			// Normal full page view
+			return View("getAppinmentsofDoctor", appoinmentDto);
+
+
+		}
+		public async Task<IActionResult> Logout()
+
+		{
+			// Clear all session values
+			HttpContext.Session.Clear();
+
+			// Optionally clear authentication cookies if using Identity
+			HttpContext.SignOutAsync();
+
+			// Redirect to login page
+			return RedirectToAction("Login", "Login");
+		}
 	}
 }

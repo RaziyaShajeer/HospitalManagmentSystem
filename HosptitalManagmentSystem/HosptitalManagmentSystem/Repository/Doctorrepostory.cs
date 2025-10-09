@@ -11,12 +11,23 @@ namespace HosptitalManagmentSystem.Repository
 		{
 			_context = context;
 		}
-		public async Task AdDoctor(Doctor doctor)
+		public async Task<Doctor> AdDoctor(Doctor doctor)
 		{
 			try
 			{
-			 _context.Doctors.AddAsync(doctor);
+				doctor.Password = (doctor.DoctorName?.Replace(" ", "").Length >= 4
+	? doctor.DoctorName.Replace(" ", "").Substring(0, 4)
+	: doctor.DoctorName?.Replace(" ", "")) + doctor.Phone.Replace(" ", "").Substring(0, 4);
+				_context.Doctors.AddAsync(doctor);
 				await _context.SaveChangesAsync();
+				User user = new User();
+				user.Id = doctor.Id;
+				user.Email = doctor.Email;
+				user.Password = doctor.Password;
+				user.Role = Enums.Role.Doctor;
+				await _context.Users.AddAsync(user);
+				await _context.SaveChangesAsync();
+				return doctor;
 			}
 			catch(Exception ex)
 			{

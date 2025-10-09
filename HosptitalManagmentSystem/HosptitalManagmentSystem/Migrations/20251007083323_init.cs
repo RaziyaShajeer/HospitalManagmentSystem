@@ -5,25 +5,25 @@
 namespace HosptitalManagmentSystem.Migrations
 {
     /// <inheritdoc />
-    public partial class ios : Migration
+    public partial class init : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
         {
-            migrationBuilder.AddColumn<int>(
-                name: "status",
-                table: "Appointments",
-                type: "int",
+            migrationBuilder.AddColumn<string>(
+                name: "Password",
+                table: "Doctors",
+                type: "nvarchar(max)",
                 nullable: false,
-                defaultValue: 0);
+                defaultValue: "");
         }
 
         /// <inheritdoc />
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropColumn(
-                name: "status",
-                table: "Appointments");
+                name: "Password",
+                table: "Doctors");
         }
     }
 }

@@ -23,7 +23,8 @@ namespace HosptitalManagmentSystem.Extenstions
 			services.AddScoped<IDoctorRepository, Doctorrepostory>();
 			services.AddScoped<IDepartmentRepository, DepartmentReposity>();
 			services.AddAutoMapper(typeof(AutoMapperProfiles).Assembly);
-			
+			services.AddScoped<ILoginRepository, LoginRepository>();
+			services.AddScoped<IloginService, LoginService>();	
 			return services;
 		}
 	}

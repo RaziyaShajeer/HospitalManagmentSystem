@@ -1,34 +1,48 @@
 ﻿@model HosptitalManagmentSystem.DTOs.DepartmentDTO
 
-<h4>DepartmentDTO</h4>
-<hr />
-<div class="row">
-    <div class="col-md-4">
-        <form asp-action="AddDepartment" enctype="multipart/form-data">
-            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-            <div class="form-group">
-                <label asp-for="Name" class="control-label"></label>
-                <input asp-for="Name" class="form-control" />
-                <span asp-validation-for="Name" class="text-danger"></span>
-                <div class="form-group">
-                    <label asp-for="DepartmentImage" class="control-label"></label>
-                    <input asp-for="DepartmentImage" type="file" name="DepartmentImage" class="form-control" />
-                    <span asp-validation-for="DepartmentImage" class="text-danger"></span>
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+            <div class="card shadow-lg border-0">
+                <div class="card-header bg-primary text-white text-center">
+                    <h4 class="mb-0">Add New Department</h4>
+                </div>
+                <div class="card-body">
+                    <form asp-action="AddDepartment" enctype="multipart/form-data">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <!-- Department Name -->
+                        <div class="mb-3">
+                            <label asp-for="Name" class="form-label fw-bold"></label>
+                            <input asp-for="Name" class="form-control form-control-lg" placeholder="Enter Department Name" />
+                            <span asp-validation-for="Name" class="text-danger"></span>
+                        </div>
+
+                        <!-- Department Image -->
+                        <div class="mb-3">
+                            <label asp-for="DepartmentImage" class="form-label fw-bold"></label>
+                            <input asp-for="DepartmentImage" type="file" class="form-control" />
+                            <span asp-validation-for="DepartmentImage" class="text-danger"></span>
+                        </div>
+
+                        <!-- Description -->
+                        <div class="mb-3">
+                            <label asp-for="Description" class="form-label fw-bold"></label>
+                            <textarea asp-for="Description" class="form-control" rows="4" placeholder="Enter Department Description"></textarea>
+                            <span asp-validation-for="Description" class="text-danger"></span>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <div class="d-grid">
+                            <input type="submit" value="Create Department" class="btn btn-primary btn-lg" />
+                        </div>
+                    </form>
+                </div>
+
+                <div class="card-footer text-center bg-light">
+                    <a asp-action="Index" class="text-decoration-none">Back to List</a>
                 </div>
             </div>
-            <div class="form-group">
-                <label asp-for="Description" class="control-label"></label>
-                <input asp-for="Description" class="form-control" />
-                <span asp-validation-for="Description" class="text-danger"></span>
-            </div>
-            <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
-            </div>
-        </form>
+        </div>
     </div>
 </div>
-
-<div>
-    <a asp-action="Index">Back to List</a>
-</div>
-

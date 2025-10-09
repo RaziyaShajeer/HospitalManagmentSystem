@@ -7,6 +7,8 @@ namespace HosptitalManagmentSystem.Models
 	{
 		public Guid AppointmentId { get; set; }
 
+		//[ForeignKey("Department")]
+		//public Guid DepartmentId { get; set; }
 		public DateTime AppointmentDate { get; set; }
 		public int TokenNumber { get; set; } // e.g., 1,2,3,... until limit
 		[ForeignKey("Patient")]
@@ -18,5 +20,7 @@ namespace HosptitalManagmentSystem.Models
 		public virtual Doctor Doctor { get; set; }
 		public virtual Patient Patient { get; set; }
 		public AppoinmentStatus status { get; set; }
+
+		/*ublic virtual Department Department { get; set; }*/
 	}
 }

@@ -14,12 +14,12 @@ namespace HosptitalManagmentSystem.Services
 			_doctorRepository = doctorRepository;
 			_mapper = mapper;	
 		}
-		public async  Task AddDoctor(Doctor doctor)
+		public async  Task<Doctor> AddDoctor(Doctor doctor)
 		{
 			try
 			{
 				
-				await _doctorRepository.AdDoctor(doctor);
+				return await _doctorRepository.AdDoctor(doctor);
 			}
 			catch(Exception ex)
 			{

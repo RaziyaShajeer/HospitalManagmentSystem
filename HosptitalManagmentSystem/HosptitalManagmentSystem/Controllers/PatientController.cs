@@ -21,9 +21,10 @@ namespace HosptitalManagmentSystem.Controllers
 		[HttpGet]
 		public async Task<IActionResult> AddPatient()
 		{
-
+			
 			return View();
 		}
+		
 		[HttpPost]
 		public async Task<IActionResult> AddPatient(PatientDTO patient)
 		{
@@ -118,7 +119,7 @@ namespace HosptitalManagmentSystem.Controllers
 		public async Task<IActionResult> EditPatient(int id,Patient patient)
 		{
 			await _patientService.EditPatient(patient);
-			return View(patient);
+			return RedirectToAction("PatientRegistration");
 		}
 	}
 }

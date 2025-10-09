@@ -97,6 +97,10 @@ namespace HosptitalManagmentSystem.Migrations
                     b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<string>("Phone")
                         .HasColumnType("nvarchar(max)");
 
@@ -156,6 +160,28 @@ namespace HosptitalManagmentSystem.Migrations
                     b.ToTable("Patients");
                 });
 
+            modelBuilder.Entity("HosptitalManagmentSystem.Models.User", b =>
+                {
+                    b.Property<Guid>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("uniqueidentifier");
+
+                    b.Property<string>("Email")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Role")
+                        .HasColumnType("int");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("Users");
+                });
+
             modelBuilder.Entity("HosptitalManagmentSystem.Models.Appointment", b =>
                 {
                     b.HasOne("HosptitalManagmentSystem.Models.Doctor", "Doctor")
@@ -165,7 +191,7 @@ namespace HosptitalManagmentSystem.Migrations
                         .IsRequired();
 
                     b.HasOne("HosptitalManagmentSystem.Models.Patient", "Patient")
-                        .WithMany()
+                        .WithMany("Appointments")
                         .HasForeignKey("PatientID")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -187,6 +213,11 @@ namespace HosptitalManagmentSystem.Migrations
                 });
 
             modelBuilder.Entity("HosptitalManagmentSystem.Models.Doctor", b =>
+                {
+                    b.Navigation("Appointments");
+                });
+
+            modelBuilder.Entity("HosptitalManagmentSystem.Models.Patient", b =>
                 {
                     b.Navigation("Appointments");
                 });

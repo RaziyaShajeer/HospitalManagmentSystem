@@ -1,98 +1,110 @@
 ﻿@model IEnumerable<HosptitalManagmentSystem.DTOs.AppoinmentListViewDTO>
 
-<div class="container my-4">
-    <!-- Search Partial -->
-    <div class="mb-4">
-        @await Html.PartialAsync("_ApoinmentSearch")
+    <style>
+    html, body {
+        height: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        display: flex;
+        flex-direction: column;
+    }
+
+    main {
+        flex: 1; /* take remaining space */
+        padding-top: 80px; /* optional if navbar is fixed */
+    }
+
+    .container-fluid {
+        margin-bottom: 0 !important;
+        padding-bottom: 0 !important;
+    }
+
+    .card:last-child {
+        margin-bottom: 0 !important;
+    }
+    </style>
+<div class="container-fluid ml-4 mt-4 mr-4">
+    <div class="card shadow-sm p-4 mb-4">
+   
+        <div class="row g-3">
+            <div class="col-md-3">
+                <label for="filterDepartment" class="form-label fw-semibold">Department</label>
+                <select id="filterDepartment" class="form-select">
+                    <option value="">-- All Departments --</option>
+                    @foreach (var dept in ViewBag.Departments as IEnumerable<SelectListItem>)
+                    {
+                        <option value="@dept.Value">@dept.Text</option>
+                    }
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="filterDoctor" class="form-label fw-semibold">Doctor</label>
+                <select id="filterDoctor" class="form-select">
+                    <option value="">-- All Doctors --</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <label for="filterDate" class="form-label fw-semibold">Date</label>
+                <input type="date" id="filterDate" class="form-control" />
+            </div>
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="button" id="btnFilter" class="btn btn-primary w-100 fw-semibold">
+                    <i class="bi bi-search"></i> Search
+                </button>
+            </div>
+        </div>
     </div>
 
-    <!-- Appointment Table -->
-    <div class="card shadow border-0 rounded-4">
-        <div class="card-header bg-gradient bg-primary text-white fw-semibold d-flex align-items-center">
-            <i class="bi bi-calendar-check me-2"></i> Appointment List
-        </div>
-        <div class="card-body p-0">
-            <div class="table-responsive">
-                <table class="table table-hover table-striped align-middle mb-0">
-                    <thead class="table-primary text-dark">
-                        <tr>
-                            <th>@Html.DisplayNameFor(model => model.Name)</th>
-                            <th>@Html.DisplayNameFor(model => model.DoctorName)</th>
-                            <th>@Html.DisplayNameFor(model => model.AppointmentDate)</th>
-                            <th>@Html.DisplayNameFor(model => model.departmentName)</th>
-                            <th>@Html.DisplayNameFor(model => model.Phone)</th>
-                            <th>@Html.DisplayNameFor(model => model.TokenNumber)</th>
-                            <th class="text-center">Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-                            <tr>
-                                <td class="fw-medium">@item.Name</td>
-                                <td>@item.DoctorName</td>
-                                <td>@item.AppointmentDate.ToString("dd MMM yyyy, hh:mm tt")</td>
-                                <td>@item.departmentName</td>
-                                <td>@item.Phone</td>
-                                <td>
-                                    <span class="badge bg-info-subtle text-dark border border-info px-3 py-2 rounded-pill">
-                                        @item.TokenNumber
-                                    </span>
-                                </td>
-                                <td class="text-center">
-                                    <a asp-action="Appointed" asp-route-id="@item.AppointmentId"
-                                       class="btn btn-success btn-sm rounded-pill me-2">
-                                        <i class="bi bi-check-circle me-1"></i> Appoint
-                                    </a>
-                                    <a asp-action="Cancel" asp-route-id="@item.AppointmentId"
-                                       class="btn btn-danger btn-sm rounded-pill">
-                                        <i class="bi bi-x-circle me-1"></i> Cancel
-                                    </a>
-                                    <form asp-controller="Appoiment" asp-action="DeleteAppoinment" asp-route-id="@item.AppointmentId" method="post" class="d-inline">
-                                        @Html.AntiForgeryToken()
-                                        <button type="submit" class="btn btn-danger btn-sm rounded-pill">
-                                            <i class="bi bi-x-circle me-1"></i> Cancel
-                                        </button>
-                                    </form>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
-            </div>
-        </div>
+    <div id="appointmentsContainer" class="card shadow-sm p-3">
+        @await Html.PartialAsync("_AppointmentsTablePartial", Model)
     </div>
 </div>
-<!-- Trigger Button -->
-<button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#centerPopup">
-    Show Popup
-</button>
 
-<!-- Modal -->
-<div class="modal fade" id="centerPopup" tabindex="-1" aria-labelledby="popupLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
-        <div class="modal-content text-center rounded-3 shadow-lg">
-            <div class="modal-header">
-                <h5 class="modal-title w-100" id="popupLabel">@TempData["Message"]</h5>
-            </div>
-            <div class="modal-body">
-                Appointment cancelled successfully!
-            </div>
-            <div class="modal-footer justify-content-center">
-                <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">OK</button>
-            </div>
-        </div>
-    </div>
-</div>
-.modal-content {
-    border-radius: 1rem;
-    font-size: 1.1rem;
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+
+            // Load doctors dynamically by department
+            $('#filterDepartment').change(function () {
+                var deptId = $(this).val();
+                $('#filterDoctor').empty().append('<option value="">-- All Doctors --</option>');
+                if (deptId) {
+                    $.get('@Url.Action("GetDoctorsByDepartment", "Appoiment")', { departmentId: deptId }, function (data) {
+                        $.each(data, function (i, doctor) {
+                            $('#filterDoctor').append('<option value="' + doctor.id + '">' + doctor.doctorName + '</option>');
+                        });
+                    });
+                }
+            });
+
+            // Search button click event
+            $('#btnFilter').click(function (e) {
+                e.preventDefault();
+
+                var dept = $('#filterDepartment').val() || null;
+                var doctor = $('#filterDoctor').val() || null;
+                var date = $('#filterDate').val() || null;
+
+                $.ajax({
+                    url: '@Url.Action("GetAllAppoinments", "Appoiment")',
+                    type: 'GET',
+                    dataType: 'html',
+                    data: {
+                        departmentId: dept,
+                        doctorId: doctor,
+                        date: date
+                    },
+                    success: function (data) {
+                        $('#appointmentsContainer').html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", error);
+                    }
+                });
+            });
+        });
+    </script>
 }
-<style>
-    .table thead th {
-        white-space: nowrap;
-    }
-    .table td, .table th {
-        vertical-align: middle;
-    }
-</style>

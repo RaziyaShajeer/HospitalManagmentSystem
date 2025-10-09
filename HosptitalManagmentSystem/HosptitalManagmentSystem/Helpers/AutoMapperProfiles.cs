@@ -23,6 +23,8 @@ namespace HosptitalManagmentSystem.Helpers
 				src.Patient.Location)).ForMember(dest=>dest.phone,opt=>opt.MapFrom(src=>src.Patient.Phone));
 			CreateMap<Appointment, AppoinmentListViewDTO>().ForMember(dest => dest.departmentName, opt => opt.MapFrom(src => src.Doctor.Department.Name)).ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor.DoctorName)).ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Patient.Name)).ForMember(dest=>dest.Phone,opt=>opt.MapFrom(src=>src.Patient.Phone));
 			CreateMap<Appointment, AppoinmentViewDTo>().ForMember(dest => dest.DepartmentName, opt => opt.MapFrom(src => src.Doctor.Department.Name)).ForMember(dest => dest.DoctorName, opt => opt.MapFrom(src => src.Doctor.DoctorName)).ForMember(dest => dest.Name, opt => opt.MapFrom(src => src.Patient.Name)).ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Patient.Phone));
+			CreateMap<Appointment, EditAppoinmentDTO>().ForMember(dest=>dest.PatientName,opt=>opt.MapFrom(src=>src.Patient.Name)).ForMember(dest=>dest.CustomId,opt=>opt.MapFrom(src=>src.Patient.CustomId)).ForMember(dest => dest.Phone, opt => opt.MapFrom(src => src.Patient.Phone)).ForMember(dest => dest.Location, opt => opt.MapFrom(src => src.Patient.Location)).ForMember(dest=>dest.DepartmentId,opt=>opt.MapFrom(src=>src.Doctor.DepartmentID));	
+			CreateMap<EditAppoinmentDTO, Appointment>();
 		}
 	}
 }

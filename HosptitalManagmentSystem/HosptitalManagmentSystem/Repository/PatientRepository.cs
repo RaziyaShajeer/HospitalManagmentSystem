@@ -92,6 +92,9 @@ namespace HosptitalManagmentSystem.Repository
 				existingPatient.Address= !string.IsNullOrEmpty(patient.Address)
 	? patient.Address
 	: existingPatient.Address;
+				existingPatient.Phone = !string.IsNullOrEmpty(patient.Phone)
+		? patient.Phone
+		: existingPatient.Phone;
 			}
 
 			_context.Patients.Update(existingPatient);

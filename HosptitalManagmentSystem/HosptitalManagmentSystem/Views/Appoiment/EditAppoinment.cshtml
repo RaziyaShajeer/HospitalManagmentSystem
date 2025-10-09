@@ -1,0 +1,112 @@
+﻿@model HosptitalManagmentSystem.DTOs.EditAppoinmentDTO
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        $(document).ready(function () {
+            $('#DepartmentId').change(function () {
+                var deptId = $(this).val();
+                $('#DoctorId').empty().append('<option value="">-- Select Doctor --</option>');
+
+                if (deptId) {
+                    $.ajax({
+                        url: '@Url.Action("GetDoctorsByDepartment", "Appoiment")',
+                        type: 'GET',
+                        data: { departmentId: deptId },
+                        success: function (data) {
+                            $.each(data, function (i, doctor) {
+                                $('#DoctorId').append('<option value="' + doctor.id + '">' + doctor.doctorName + '</option>');
+                            });
+                        },
+                        error: function () {
+                            alert('Error retrieving doctors.');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
+}
+
+<div class="container mt-5">
+    <div class="card shadow-lg rounded-4 border-0">
+        <div class="card-header bg-gradient-primary text-white text-center py-3 rounded-top">
+            <h3 class="mb-0 fw-bold"><i class="bi bi-pencil-square me-2"></i>Edit Appointment</h3>
+        </div>
+
+        <div class="card-body p-4">
+            <form asp-action="EditAppoinment">
+                <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                <input type="hidden" asp-for="AppointmentId" />
+                <input type="hidden" asp-for="PatientID" />
+
+                <div class="row g-3">
+                    <div class="col-md-6">
+                        <label asp-for="CustomId" class="form-label fw-semibold"></label>
+                        <input asp-for="CustomId" class="form-control rounded-pill" placeholder="Custom ID" />
+                        <span asp-validation-for="CustomId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="PatientName" class="form-label fw-semibold"></label>
+                        <input asp-for="PatientName" class="form-control rounded-pill" placeholder="Patient Name" />
+                        <span asp-validation-for="PatientName" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="AppointmentDate" class="form-label fw-semibold"></label>
+                        <input asp-for="AppointmentDate" type="date" class="form-control rounded-pill" />
+                        <span asp-validation-for="AppointmentDate" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Phone" class="form-label fw-semibold"></label>
+                        <input asp-for="Phone" class="form-control rounded-pill" placeholder="Phone Number" />
+                        <span asp-validation-for="Phone" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="DepartmentId" class="form-label fw-semibold"></label>
+                        <select asp-for="DepartmentId" class="form-select rounded-pill" asp-items="ViewBag.Departments">
+                            <option value="">-- Select Department --</option>
+                        </select>
+                        <span asp-validation-for="DepartmentId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="DoctorId" class="form-label fw-semibold"></label>
+                        <select asp-for="DoctorId" class="form-select rounded-pill" asp-items="Model.Doctors">
+                            <option value="">-- Select Doctor --</option>
+                        </select>
+                        <span asp-validation-for="DoctorId" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="Location" class="form-label fw-semibold"></label>
+                        <input asp-for="Location" class="form-control rounded-pill" placeholder="Location" />
+                        <span asp-validation-for="Location" class="text-danger"></span>
+                    </div>
+
+                    <div class="col-md-6">
+                        <label asp-for="TokenNumber" class="form-label fw-semibold"></label>
+                        <input asp-for="TokenNumber" class="form-control rounded-pill" placeholder="Token Number" />
+                        <span asp-validation-for="TokenNumber" class="text-danger"></span>
+                    </div>
+                </div>
+
+                <div class="mt-4 text-center">
+                    <button type="submit" class="btn btn-success btn-lg rounded-pill px-5">
+                        <i class="bi bi-check-circle me-2"></i> Save Changes
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <div class="card-footer bg-light text-center rounded-bottom">
+            <a asp-action="Index" class="btn btn-outline-primary rounded-pill">
+                <i class="bi bi-arrow-left me-1"></i> Back to Appointments
+            </a>
+        </div>
+    </div>
+</div>

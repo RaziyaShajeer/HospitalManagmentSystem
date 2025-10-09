@@ -5,7 +5,7 @@ namespace HosptitalManagmentSystem.Interface
 	public interface IDoctorRepository
 	{
 		public Task<Doctor> GetDoctorById(Guid id);
-		public Task AdDoctor(Doctor doctor);
+		public Task<Doctor> AdDoctor(Doctor doctor);
 		public Task<List<Doctor>> GetDoctorsByDepartment(Guid departmentId);
 		public  Task<List<Doctor>> GetDoctors();	
 	}

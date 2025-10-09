@@ -33,5 +33,13 @@ namespace HosptitalManagmentSystem.Services
 		{
 		 return await _appoimentRepository.DeleteAppoinment(id);	
 		}
+		public Task EditAppoinment(Appointment appointment)
+		{
+			return _appoimentRepository.EditAppoinment(appointment);
+		}
+		public async Task<List<Appointment>> GetAppoinmentsofDoctor(Guid id)
+		{
+			return await _appoimentRepository.GetAppoinmentsofDoctor(id);
+		}
 	}
 }

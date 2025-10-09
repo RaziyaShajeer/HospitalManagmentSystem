@@ -1,133 +1,97 @@
-﻿
-@using HosptitalManagmentSystem.Models
+﻿@using HosptitalManagmentSystem.Models
 @{
     ViewBag.Title = "Home Page";
 }
+<link rel="stylesheet" href="~/css/mystyles.css" asp-append-version="true" />
 
-<style>
-    .bg-image {
-        height: 100vh;
-        background-image: url("/Images/HomeImage.jpg");
-        background-size: cover;
-        background-position: center;
-        background-repeat: no-repeat;
-        height: 400px; /* or 100vh for full screen */
-    }
 
-    .card-text {
-        display: -webkit-box;
-        -webkit-line-clamp: 4; /* number of lines to show */
-        -webkit-box-orient: vertical;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
+<!-- 🌟 Hero Section -->
+<section class="hero-section">
+    <div class="hero-content">
+        <h1>Welcome to <span class="text-warning">HS Hospital</span></h1>
+        <p>Your Health, Our Priority — Providing Quality Care You Can Trust</p>
+        <a href="#about" class="btn btn-primary">Learn More</a>
+    </div>
+</section>
 
-</style>
-
-    <div class="container-fluid">
-
-    <div class="row bg-image">
-
+<!-- 🌟 About Section -->
+<section id="about" class="about-section container">
+    <div class="row align-items-center">
+        <div class="col-md-6 mb-4">
+            <h2>About Us</h2>
+            <p>
+                HS Hospital is committed to delivering exceptional healthcare services
+                with compassion and care. Our team of highly qualified doctors, nurses,
+                and staff ensure that every patient receives the best treatment in a
+                safe and comfortable environment.
+            </p>
+            <p>
+                With state-of-the-art facilities, modern medical equipment, and a
+                patient-first approach, we strive to provide affordable and reliable
+                healthcare to families in our community.
+            </p>
+            <a href="#" class="btn btn-outline-primary rounded-pill px-4">Read More</a>
         </div>
-   </div>
-      
-   <div class="container-fluid">
-    <div class="container pt-5">
-        <div class="row">
-            <div class="col-md-6">
-                <h2>About Us</h2>
-                <p class="pt-2">
-                    HS Hospital is committed to delivering exceptional healthcare services
-                    with compassion and care. Our team of highly qualified doctors, nurses,
-                    and staff ensure that every patient receives the best treatment in a
-                    safe and comfortable environment.
-                </p>
-                <p >
-                    With state-of-the-art facilities, modern medical equipment, and a
-                    patient-first approach, we strive to provide affordable and reliable
-                    healthcare to families in our community.
-                </p>
-
-                <a href="#" class="btn btn-outline-primary">Learn More</a>
-                <h2 class="pt-5">Our Vision</h2>
-                <p class="pt-2">To provide compassionate, patient-centered healthcare with excellence, innovation, and integrity for a healthier community.</p>
-
-            </div>
-            <div class="col-md-6">
-                <img src="/Images/Hospital_building.jpg" class="img-fluid rounded shadow" alt="Hospital Image">
-            </div>
+        <div class="col-md-6">
+            <img src="/Images/Hospital_building.jpg" class="img-fluid rounded shadow-lg" alt="Hospital Image" />
         </div>
     </div>
+</section>
+
+<!-- 🌟 Our Vision -->
+<section class="container py-5">
+    <div class="text-center">
+        <h2 class="fw-bold text-primary mb-3">Our Vision</h2>
+        <p class="text-secondary fs-5">
+            To provide compassionate, patient-centered healthcare with excellence, innovation, and integrity for a healthier community.
+        </p>
     </div>
+</section>
 
-
-<div class="container-fluid py-5">
-    <h2 class="text-center mb-4">Our Specialities</h2>
-    <!-- 🔹 Search Partial View -->
-    <div id="specialitiesCarousel" class="carousel slide" data-bs-ride="carousel">
-        <!-- ✅ Render dynamic slides -->
-        @Html.Partial("_DepartmentList")
-
-        <!-- Carousel Controls -->
-        <button class="carousel-control-prev" type="button" data-bs-target="#specialitiesCarousel" data-bs-slide="prev">
-            <span class="carousel-control-prev-icon"></span>
-        </button>
-        <button class="carousel-control-next" type="button" data-bs-target="#specialitiesCarousel" data-bs-slide="next">
-            <span class="carousel-control-next-icon"></span>
-        </button>
+<!-- 🌟 Specialities Carousel -->
+<section class="specialities">
+    <div class="container text-center">
+        <h2>Our Specialities</h2>
+        <div id="specialitiesCarousel" class="carousel slide" data-bs-ride="carousel">
+            @Html.Partial("_DepartmentList")
+            <button class="carousel-control-prev" type="button" data-bs-target="#specialitiesCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#specialitiesCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
+        </div>
     </div>
+</section>
 
-</div>
-   
-
-
-<div class="container-fluid py-5 bg-light">
+<!-- 🌟 Contact Section -->
+<section class="contact-section">
     <div class="container">
-        <h2 class="text-center mb-4">Get in Touch</h2>
-        <div class="row justify-content-center">
+        <h2 class="text-center">Get in Touch</h2>
+        <div class="row justify-content-center mt-4">
             <!-- Contact Info -->
-            <div class="col-md-4 mb-3">
+            <div class="col-md-4 mb-4">
                 <h5>Contact Information</h5>
-                <p><strong>Address:</strong> HS Hospital, Main Road, Thrissur, Kerala</p>
-                <p><strong>Phone:</strong> +91 98765 43210</p>
-                <p><strong>Email:</strong> info@hshospital.com</p>
+                <p><i class="bi bi-geo-alt-fill"></i> HS Hospital, Main Road, Thrissur, Kerala</p>
+                <p><i class="bi bi-telephone-fill"></i> +91 98765 43210</p>
+                <p><i class="bi bi-envelope-fill"></i> info@hshospital.com</p>
             </div>
 
             <!-- Contact Form -->
             <div class="col-md-6">
                 <form>
                     <div class="mb-3">
-                        <input type="text" class="form-control" placeholder="Your Name" required>
+                        <input type="text" class="form-control" placeholder="Your Name" required />
                     </div>
                     <div class="mb-3">
-                        <input type="email" class="form-control" placeholder="Your Email" required>
+                        <input type="email" class="form-control" placeholder="Your Email" required />
                     </div>
                     <div class="mb-3">
                         <textarea class="form-control" rows="4" placeholder="Your Message" required></textarea>
                     </div>
-                    <button type="submit" class="btn btn-primary w-100">Send Message</button>
+                    <button type="submit" class="btn btn-warning w-100">Send Message</button>
                 </form>
             </div>
         </div>
     </div>
-</div>
-
-
-<footer>
-    <div class="row">
-       
-        @* <div class="col span-1-of-2">
-            <ul class="social-links">
-                <li><a href="#"><i class="ion-logo-facebook"></i></a></li>
-                <li><a href="#"><i class="ion-logo-twitter"></i></a></li>
-                <li><a href="#"><i class="ion-logo-googleplus"></i></a></li>
-                <li><a href="#"><i class="ion-logo-instagram"></i></a></li>
-            </ul>
-        </div> *@
-    </div>
-    <div class="row">
-        <p> Copyright &copy; @DateTime.Now.Year by HMS. All rights reserved.</p>
-    </div>
-</footer>
-
-
+</section>

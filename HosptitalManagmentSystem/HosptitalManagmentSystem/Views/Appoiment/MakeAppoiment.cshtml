@@ -84,7 +84,7 @@
                 Department
             </dt>
             <dd class="col-sm-10">
-                <select id="DepartmentId" class="form-control">
+                <select id="DepartmentId" asp-for="DepartmentId" class="form-control">
                     <option value="">-- Select Department --</option>
                     @foreach (var dept in ViewBag.Departments)
                     {
@@ -96,15 +96,15 @@
                 Doctor
             </dt>
 
-            <div class="form-group">
+                <div class="form-group">
               
 
-                <select id="DoctorId" asp-for="SelectedDoctorId" class="form-control">
-                    <option value="">-- Select Doctor --</option>
-                </select>
-                <span asp-validation-for="SelectedDoctorId" class="text-danger"></span>
+                    <select id="DoctorId" asp-for="SelectedDoctorId" class="form-control">
+                        <option value="">-- Select Doctor --</option>
+                    </select>
+                    <span asp-validation-for="SelectedDoctorId" class="text-danger"></span>
 
-            </div>
+                </div>
         </dl>
 
         <button type="submit" class="btn btn-success">Book Appointment</button>

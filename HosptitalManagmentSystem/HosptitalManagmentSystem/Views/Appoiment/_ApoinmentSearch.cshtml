@@ -1,17 +1,30 @@
-﻿
-<form method="get" asp-action="Index">
-    <div class="row mb-3">
-        <div class="col-md-3">
-            <input type="date" name="searchDate" class="form-control" />
-        </div>
-        <div class="col-md-3">
-            <input type="text" name="phone" placeholder="Phone Number" class="form-control" />
-        </div>
-        <div class="col-md-3">
-            <input type="text" name="opNumber" placeholder="OP Number" class="form-control" />
-        </div>
-        <div class="col-md-3">
-            <button type="submit" class="btn btn-primary w-100">Search</button>
+﻿<form method="get" asp-action="Index">
+    <div class="card shadow-sm rounded-4 p-4 mb-4">
+        <div class="row g-3 align-items-center">
+            <!-- Date Picker -->
+            <div class="col-md-3">
+               @*  <label class="form-label fw-semibold"><i class="bi bi-calendar-event me-1"></i> Date</label> *@
+                <input type="date" name="searchDate" class="form-control rounded-pill" />
+            </div>
+
+            <!-- Phone Number -->
+            <div class="col-md-3">
+@*                 <label class="form-label fw-semibold"><i class="bi bi-telephone-fill me-1"></i> Phone</label> *@
+                <input type="text" name="phone" placeholder="Phone Number" class="form-control rounded-pill" />
+            </div>
+
+            <!-- OP Number -->
+            <div class="col-md-3">
+               @*  <label class="form-label fw-semibold"><i class="bi bi-hash me-1"></i> OP Number</label> *@
+                <input type="text" name="opNumber" placeholder="OP Number" class="form-control rounded-pill" />
+            </div>
+
+            <!-- Search Button -->
+            <div class="col-md-3 d-flex align-items-end">
+                <button type="submit" class="btn btn-primary w-100 rounded-pill btn-lg">
+                    <i class="bi bi-search me-2"></i> Search
+                </button>
+            </div>
         </div>
     </div>
 </form>

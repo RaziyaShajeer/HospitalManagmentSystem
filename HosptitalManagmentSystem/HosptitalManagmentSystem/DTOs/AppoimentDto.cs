@@ -4,7 +4,7 @@ namespace HosptitalManagmentSystem.DTOs
 {
 	public class AppoimentDto
 	{
-		public Guid Id { get; set; }
+		public Guid AppointmentId { get; set; }
 		public int PatientId { get; set; }
 		public string CustomId { get; set; }
 		[Required(ErrorMessage = "Booking date is required")]
@@ -16,6 +16,6 @@ namespace HosptitalManagmentSystem.DTOs
 		public Guid SelectedDoctorId { get; set; }
 		public string? Location { get; set; }
 
-
+		public Guid DepartmentId { get; set; } // <-- for dropdown binding
 	}
 }

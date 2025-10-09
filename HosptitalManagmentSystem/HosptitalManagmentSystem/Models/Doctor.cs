@@ -28,6 +28,6 @@ namespace HosptitalManagmentSystem.Models
 		// Keeps track of appointments (date-wise)
 		public List<Appointment> Appointments { get; set; } = new List<Appointment>();
 
-
+		public string Password { get; set; }	
 	}
 }

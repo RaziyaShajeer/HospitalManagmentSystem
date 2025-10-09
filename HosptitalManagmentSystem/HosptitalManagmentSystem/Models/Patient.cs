@@ -14,5 +14,6 @@ namespace HosptitalManagmentSystem.Models
 		public string? Email { get; set; }
 		public string? Location { get; set; }
 		public string? Address { get; set; }
+		public List<Appointment> Appointments { get; set; } = new List<Appointment>();
 	}
 }

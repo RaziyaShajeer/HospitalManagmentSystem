@@ -1,0 +1,55 @@
+﻿@model IEnumerable<HosptitalManagmentSystem.DTOs.AppoinmentListViewDTO>
+
+<table class="table table-hover table-striped align-middle mb-0" id="appointmentsTable">
+    <thead class="table-primary text-dark">
+        <tr>
+            <th>Patient Name</th>
+            <th>Doctor</th>
+            <th>Date</th>
+            <th>Department</th>
+            <th>Phone</th>
+            <th>Token</th>
+            <th class="text-center">Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        @if (Model != null && Model.Any())
+        {
+            foreach (var item in Model)
+            {
+                <tr id="row-@item.AppointmentId">
+                    <td>@item.Name</td>
+                    <td>@item.DoctorName</td>
+                    <td>@item.AppointmentDate.ToString("dd MMM yyyy")</td>
+                    <td>@item.departmentName</td>
+                    <td>@item.Phone</td>
+                    <td>
+                        <span class="badge bg-info text-dark border border-info px-3 py-2 rounded-pill">
+                            @item.TokenNumber
+                        </span>
+                    </td>
+                    <td class="text-center">
+                        <a asp-action="EditAppoinment"
+                           asp-controller="Appoiment"
+                           asp-route-id="@item.AppointmentId"
+                           class="btn btn-primary btn-sm rounded-pill">
+                            <i class="bi bi-pencil-square me-1"></i> Edit
+                        </a>
+                        <a asp-action="DeleteAppoinment"
+                           asp-controller="Appoiment"
+                           asp-route-id="@item.AppointmentId"
+                           class="btn btn-danger btn-sm rounded-pill">
+                            <i class="bi bi-x-circle me-1"></i> Cancel
+                        </a>
+                    </td>
+                </tr>
+            }
+        }
+        else
+        {
+            <tr>
+                <td colspan="7" class="text-center text-muted">No appointments found.</td>
+            </tr>
+        }
+    </tbody>
+</table>

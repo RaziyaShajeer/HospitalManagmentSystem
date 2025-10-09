@@ -1,21 +1,35 @@
 ﻿@model HosptitalManagmentSystem.Models.Department
 
-<div class="container-fluid text-center">
-    <h1 class="display-4">@Model.Name</h1>
-</div>
-
-<div class="row align-items-center mt-4">
-    <!-- Left side: Image -->
-    <div class="col-md-5 text-center">
-        <img src="@Url.Content("~/" + Model.DepartmentImagePath)"
-             alt="@Model.Name"
-             class="img-fluid rounded-circle"
-             style="width:400px; height:400px; object-fit:cover;" />
+<div class="container mt-5">
+    <!-- Department Header -->
+    <div class="text-center mb-5">
+        <h1 class="display-4 fw-bold text-primary">@Model.Name</h1>
+        <hr class="w-25 mx-auto border-2 border-primary">
     </div>
 
-    <!-- Right side: Description -->
-    <div class="col-md-7 d-flex align-items-center justify-content-center">
-        <p class="lead">@Model.Description</p>
+    <!-- Department Content -->
+    <div class="row align-items-center g-5">
+        <!-- Image Card -->
+        <div class="col-md-5 text-center">
+            <div class="card shadow-lg border-0">
+                <img src="@Url.Content("~/" + Model.DepartmentImagePath)"
+                     alt="@Model.Name"
+                     class="img-fluid rounded-circle p-3"
+                     style="width:400px; height:400px; object-fit:cover;" />
+            </div>
+        </div>
+
+        <!-- Description Card -->
+        <div class="col-md-7">
+            <div class="card shadow-lg border-0 p-4">
+                <h3 class="fw-bold text-primary mb-3">About @Model.Name</h3>
+                <p class="lead text-secondary fs-5" style="line-height:1.8;">
+                    @Model.Description
+                </p>
+               @*  <a asp-action="Index" class="btn btn-outline-primary mt-3">
+                    Back to Departments
+                </a> *@
+            </div>
+        </div>
     </div>
 </div>
-

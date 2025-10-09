@@ -1,0 +1,64 @@
+﻿@model IEnumerable<HosptitalManagmentSystem.DTOs.AppoinmentListViewDTO>
+
+<div class="card-body p-3">
+    <div class="row mb-3 g-2 align-items-end">
+        
+        <div class="col-md-3">
+            <label for="filterDoctor" class="form-label">@ViewBag.DoctorName</label>
+         
+        </div>
+        <div class="col-md-3">
+            <label for="filterDate" class="form-label">Date</label>
+            <input type="date" id="filterDate" class="form-control" />
+        </div>
+        <div class="col-md-3">
+            <button type="button" id="btnFilter" class="btn btn-primary w-100">Search</button>
+        </div>
+    </div>
+    <div id="appointmentsContainer">
+        @await Html.PartialAsync("_AllAppoinmentspartial", Model)
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(document).ready(function () {
+            console.log("Script loaded successfully");
+            console.log("Button found:", $('#btnFilter').length);
+
+            
+
+            // Search button click event
+            $('#btnFilter').click(function (e) {
+                console.log("Button clicked!");
+                e.preventDefault();
+
+              
+               
+                var date = $('#filterDate').val() || null;
+
+                console.log("Date:", date);
+
+                $.ajax({
+                    url: '@Url.Action("getAppinmentsofDoctor", "Doctor")',
+                    type: 'GET',
+                    dataType: 'html',
+                    data: {
+                        date: date
+                    },
+                    success: function (data) {
+                        console.log("Success!");
+                            console.log(data);
+                        $('#appointmentsContainer').html(data);
+
+                    },
+                    error: function (xhr, status, error) {
+                        console.error("Error:", error);
+                        console.error("Status:", status);
+                        console.error("Response:", xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+}
